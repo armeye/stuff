@@ -1,0 +1,14 @@
+# Write your default config options here!
+
+[extension.webm]
+vc=fflibvpx
+
+[extension.mp3]
+vo=null
+
+[extension.opus]
+vo=null
+
+[protocol.dvb]
+vf=yadif
+cache=8192

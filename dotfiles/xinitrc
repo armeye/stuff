@@ -1,0 +1,19 @@
+#! /bin/sh
+
+
+xrdb ~/.xrdb
+xmodmap ~/.Xmodmap
+
+xterm &
+xterm &
+xterm &
+
+while true; do
+  xsetroot -name `date "+%H:%M"`
+  sleep 60
+done &
+
+tabbed -d -f -n browser surf -e -u "`cat ~/.surf/useragent.txt`" > /home/pk/.tabbed.xid
+#emacs &
+
+exec dwm
