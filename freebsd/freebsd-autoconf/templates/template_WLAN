@@ -1,0 +1,6 @@
+device wlan
+device wlan_tkip
+device wlan_wep
+device wlan_ccmp
+device wlan_amrr
+

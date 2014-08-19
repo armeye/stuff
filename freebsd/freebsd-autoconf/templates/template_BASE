@@ -1,0 +1,42 @@
+cpu %%cpu%%
+
+ident %%ident%%
+
+options INET
+options INET6
+device bpf
+device loop
+device ether
+
+options SCHED_ULE
+options PREEMPTION
+options PRINTF_BUFR_SIZE=128
+
+device crypto
+device random
+device pty
+
+options FFS
+options UFS_DIRHASH
+options UFS_ACL
+options SOFTUPDATES
+
+options SYSVSHM
+options SYSVSEM
+options SYSVMSG
+options _KPOSIX_PRIORITY_SCHEDULING
+
+options GEOM_PART_GPT
+options GEOM_LABEL
+options GEOM_ELI
+
+options SMP
+device apic
+
+device cpufreq
+
+device pci
+device acpi
+
+
+

@@ -1,0 +1,99 @@
+cpu %%cpu%%
+
+ident %%ident%%
+
+options INET
+options INET6
+options VIMAGE
+device pf
+device bpf
+device loop
+device ether
+
+options SCHED_ULE
+options PREEMPTION
+options PRINTF_BUFR_SIZE=128
+
+device crypto
+device random
+device pty
+
+options FFS
+options UFS_DIRHASH
+options UFS_ACL
+options SOFTUPDATES
+options MSDOSFS
+
+options SYSVSHM
+options SYSVSEM
+options SYSVMSG
+options _KPOSIX_PRIORITY_SCHEDULING
+
+options GEOM_PART_GPT
+options GEOM_PART_BSD64
+options GEOM_LABEL
+options GEOM_ELI
+
+options CAPABILITIES
+options CAPABILITY_MODE
+options PROCDESC
+
+options SMP
+device apic
+
+device cpufreq
+
+device pci
+device acpi
+
+device ahci
+
+device scbus
+device da
+device pass
+
+device atkbdc
+device atkbd
+device psm
+device kbdmux
+options KBD_INSTALL_CDEV
+
+device vt
+options SC_NO_FONT_LOADING
+options TEKEN_UTF8
+options TEKEN_CONS25
+device pmtimer
+device vt_vga
+device agp
+
+device uhci
+device ehci
+device usb
+device umass
+device ums
+
+device alc
+device mii
+device atphy
+
+device ath
+device ath_pci
+options AH_SUPPORT_AR5416
+device ath_rate_sample
+device ath_hal
+
+device wlan
+device wlan_tkip
+device wlan_ccmp
+device wlan_wep
+device wlan_amrr
+
+device sound
+device snd_hda
+
+options KDTRACE_HOOKS
+options DDB_CTF
+options DDB
+options KDB
+options STACK
+

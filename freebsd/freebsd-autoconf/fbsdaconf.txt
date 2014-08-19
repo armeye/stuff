@@ -1,0 +1,12 @@
+KERNCONF_CPU=CPU_I686
+KERNCONF_IDENT=HOBO
+
+driver_targets:\
+template_drm2\
+template_usb_hid\
+template_dtrace\
+template_bluetooth\
+template_ahci\
+template_ath\
+template_alc\
+template_atpc_hid

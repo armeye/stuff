@@ -1,0 +1,73 @@
+cpu CPU_I686
+
+ident HOBO
+
+options INET
+options INET6
+device bpf
+device loop
+device ether
+
+options SCHED_ULE
+options PREEMPTION
+options PRINTF_BUFR_SIZE=128
+
+device crypto
+device random
+device pty
+
+options FFS
+options UFS_DIRHASH
+options UFS_ACL
+options SOFTUPDATES
+
+options SYSVSHM
+options SYSVSEM
+options SYSVMSG
+options _KPOSIX_PRIORITY_SCHEDULING
+
+options GEOM_PART_GPT
+options GEOM_LABEL
+options GEOM_ELI
+
+options SMP
+device apic
+
+device cpufreq
+
+device pci
+device acpi
+
+
+
+device ahci
+device alc
+device atphy
+device ath
+device ath_pci
+options AH_SUPPORT_AR5416
+device ath_rate_sample
+device ath_hal
+
+device atkbd
+device atkbdc
+options KDTRACE_HOOKS
+device kbdmux
+options KBD_INSTALL_CDEV
+device mii
+device psm
+device scbus
+device da
+device pass
+device uhci
+device ehci
+device usb
+device umass
+device vt_vga
+device vt
+device wlan
+device wlan_tkip
+device wlan_wep
+device wlan_ccmp
+device wlan_amrr
+

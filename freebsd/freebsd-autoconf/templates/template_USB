@@ -1,0 +1,4 @@
+device uhci
+device ehci
+device usb
+device umass

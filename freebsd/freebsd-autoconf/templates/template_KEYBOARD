@@ -1,0 +1,2 @@
+device kbdmux
+options KBD_INSTALL_CDEV

@@ -1,0 +1,6 @@
+device ath
+device ath_pci
+options AH_SUPPORT_AR5416
+device ath_rate_sample
+device ath_hal
+
