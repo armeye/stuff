@@ -1,6 +1,0 @@
-
-.include "fbsdaconf.txt"
-
-gen_kernconf:
-	sed -e "s/%%ident%%/${KERNCONF_IDENT}"\
-	-e "s/%%cpu%%" HOBO 
