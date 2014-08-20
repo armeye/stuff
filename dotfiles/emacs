@@ -1,0 +1,105 @@
+(mapc #'require '(package cl))
+
+(add-to-list 'package-archives 
+	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+
+(package-initialize)
+
+(defun trim-string (str)
+  (replace-regexp-in-string "^[ \t]+" ""
+                            (replace-regexp-in-string "[ \t\n]+$" "" str)))
+
+(setq uname-host (trim-string (shell-command-to-string "uname -n")))
+
+
+(defun pk/add-to-list (lst &rest args)
+  (loop for i in args do (add-to-list lst i)))
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+(when (string= uname-host "doge")
+  (require 'auto-complete-config)
+  (setq ac-auto-start 5)
+  (ac-config-default))
+
+(require 'yasnippet)
+(yas-global-mode 1)
+
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+
+(pk/add-to-list 'load-path
+		"/usr/home/pk/.emacs.d"
+		"/usr/home/pk/.emacs.d/slime-2013-04-05"
+		"/usr/home/pk/.emacs.d/slime-2013-04-05/contrib"
+		"/usr/home/pk/.emacs.d/w3m")
+
+(load "emacs-secrets.el")
+
+(defun pk/buffer-add-sentinel ()
+  (interactive)  
+  (let ((buf (buffer-file-name)))
+    (when buf
+      (start-process-shell-command "entr-sentinel" "Entr"
+				   (concatenate 'string
+						"echo "
+						buf
+						" | entr emacsclient -e \'(with-current-buffer \""
+						(buffer-name)
+						"\" (revert-buffer t t t))\'")))))
+
+(make-variable-buffer-local
+ (defvar pk/buffer-sentinel-entr-proc nil))
+
+(define-minor-mode pk/buffer-sentinel-mode
+  "Update buffer if underlying file changes"
+  :lighter ""
+  (if pk/buffer-sentinel-mode
+      (setq pk/buffer-sentinel-entr-proc (pk/buffer-add-sentinel))
+    (when (processp pk/buffer-sentinel-entr-proc) (delete-process pk/buffer-sentinel-entr-proc))))
+
+
+(mapc #'require '(slime emms-setup bbdb))
+
+(bbdb-initialize)
+
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+;(require 'slime)
+(slime-setup '(slime-fancy))
+
+(emms-all)
+(emms-default-players)
+(setq emms-stream-default-action "play")
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(show-paren-mode 1)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(add-hook 'latex-mode-hook 'visual-line-mode)
+
+(load "/usr/local/share/emacs/site-lisp/haskell-mode/haskell-site-file")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'font-lock-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "/home/pk/bin/browse")
+
+
+
+; Org mode stuff
+(setq org-directory "~/Org/"
+      org-mobile-directory "~/Org/mobile"
+      org-mobile-inbox-for-pull "~/Org/flagged.org")
+
+(setq calendar-latitude 53.391186
+      calendar-longitude 7.227408)
+
+(server-start)
+
+;(autoload 'w3m "w3m" "w3m for emacs" t)
+(require 'w3m)
+(w3m-toggle-inline-images t)
+
+(load-theme 'wombat t)
+

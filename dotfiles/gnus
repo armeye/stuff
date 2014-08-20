@@ -1,0 +1,93 @@
+(require 'smtpmail)
+
+(setq user-full-name "Arne Meyer")
+(setq user-mail-address "meyer.arne83@gmail.com")
+
+(setq gnus-select-method '(nntp "textnews.news.cambrium.nl"))
+(setq gnus-secondary-select-methods '((nnml "smtp.web.de")))
+
+(setq message-send-mail-function 'smtpmail-send-it)
+(setq gnus-agent-send-mail-function 'smtpmail-send-it)
+(setq send-mail-function 'smtpmail-send-it)
+(setq smtpmail-smtp-server "smtp.gmail.com") 
+(setq smtpmail-smtp-service 587)
+(setq smtpmail-local-domain "localnet")
+(setq smtpmail-starttls-credentials '("smtp.gmail.com" 587 "" ""))
+
+
+(load "~/.gnus-passwords.el")
+(setq mail-sources `((pop :server "pop3.web.de" :port 995 :user "meyer.arne@web.de" :password ,gnus-webde-password :stream ssl)
+		     (pop :server "pop.gmail.com" :port 995 :user "meyer.arne83@gmail.com" :password ,gnus-gmail-password :stream ssl)
+		     (file :path "/var/mail/pk")
+		     ))
+
+(add-to-list 'gnus-secondary-select-methods '(nntp "news.gwene.org"))
+(add-to-list 'gnus-secondary-select-methods '(nntp "news.gmane.org"))
+
+(setq nnmail-split-methods
+      (list
+       '("mail.freebsd.stable10" "^X-SVN-Group:.*stable-10")
+       '("mail.freebsd.head" "^X-SVN-Group:.*head")
+       (list "mail.freebsd.svn" (concat "^" (regexp-opt '("To" "Cc" "From" "Reply-To") 1) ":.*svn-src-all"))
+       (list "mail.freebsd.projects" (concat "^" (regexp-opt '("To" "Cc" "From" "Reply-To") 1) ":.*svn-src-projects"))
+       '("mail.spam" "^Subject:.*\\([Vv]icodin\\|[Pp]harmacy\\|[Pp]enis\\|[Rr]eplica Watches\\|Viagra\\|[Vv]irtual [Vv]egas\\).*")
+       '("mail.nachhilfe" "^From:.*holger\\.mueller87@gmx.de")
+       '("mail.google.buzz" "^Message-ID:.*@activities.mail.google.com")
+       '("mail.hochschule" "^From.*:technik-emden.de")
+       '("mail.rss" "^User-Agent: rss2email")
+       '("mail.other" "")))
+
+(setq nnmail-crosspost nil)
+
+(setq gnus-auto-expirable-newsgroups "^.*mail\\.\\(freebsd.*\\|rss\\|spam\\)\\|^nnrss:.*")
+(setq nnmail-expiry-wait-function
+      (lambda (group)
+	(cond
+	 ((string= group "mail.rss") 1)
+	 (t 7))))
+
+(gnus-demon-add-handler 'gnus-demon-scan-news 20 t)
+
+(defadvice gnus-demon-scan-news (around gnus-demon-timeout activate)
+  "Timeout for Gnus."
+  (with-timeout
+      (120 (message "Gnus timed out."))
+    ad-do-it))
+
+(require 'nnrss)
+(require 'browse-url)
+
+(defun browse-nnrss-url (arg)
+  (interactive "p")
+  (let ((url (assq nnrss-url-field
+		   (mail-header-extra
+		    (gnus-data-header
+		     (assq (gnus-summary-article-number)
+			   gnus-newsgroup-data))))))
+    (if url
+	(browse-url (cdr url))
+	(gnus-summary-scroll-up arg))))
+
+(add-hook 'gnus-summary-mode-hook
+	  (lambda ()
+	    (define-key gnus-summary-mode-map
+		(kbd "C-<return>")
+	      'browse-nnrss-url)))
+
+(add-to-list 'nnmail-extra-headers nnrss-url-field)
+
+(require 'mm-url)
+(defadvice mm-url-insert (after DE-convert-atom-to-rss () )
+  "Converts atom to RSS by calling xsltproc."
+  (when (re-search-forward "xmlns=\"http://www.w3.org/.*/Atom\"" 
+			   nil t)
+    (goto-char (point-min))
+    (message "Converting Atom to RSS... ")
+    (call-process-region (point-min) (point-max) 
+			 "xsltproc" 
+			 t t nil 
+			 (expand-file-name "~/.emacs.d/atom2rss.xsl") "-")
+    (goto-char (point-min))
+    (message "Converting Atom to RSS... done")))
+
+(ad-activate 'mm-url-insert)
