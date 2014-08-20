@@ -13,7 +13,7 @@ while true; do
   sleep 60
 done &
 
-tabbed -d -f -n browser surf -e -u "`cat ~/.surf/useragent.txt`" > /home/pk/.tabbed.xid
-#emacs &
+tabbed -d -f -n browser surf -e > /home/pk/.tabbed.xid
+emacs &
 
 exec dwm
