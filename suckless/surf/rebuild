@@ -1,0 +1,2 @@
+#! /bin/sh
+make -C /usr/ports/www/surf deinstall reinstall clean

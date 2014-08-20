@@ -14,13 +14,13 @@ static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "term", "editor", "www", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "term", "editor", "www", "scratch", "media" };
 
 static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "XTerm",    NULL,       NULL,       1,            False,       -1 },
-	{ "tabbed",   NULL,       NULL,       1 << 2,       False,       -1 },
-	{ "Emacs",    NULL,       NULL,       1 << 1,       False,       -1 },
+	{ "XTerm",    NULL,       NULL,       0x1,            False,       -1 },
+	{ "tabbed",   NULL,       NULL,       0x4,            False,       -1 },
+	{ "Emacs",    NULL,       NULL,       0x2,            False,       -1 },
 };
 
 /* layout(s) */
