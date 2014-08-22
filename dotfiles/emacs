@@ -86,11 +86,12 @@
       browse-url-generic-program "/home/pk/bin/browse")
 
 
-
-; Org mode stuff
+; Org stuff
 (setq org-directory "~/Org/"
-      org-mobile-directory "~/Org/mobile"
-      org-mobile-inbox-for-pull "~/Org/flagged.org")
+      org-agenda-files '("~/Org/todo.org")
+      org-mobile-files '("~/Org/todo.org")
+      org-mobile-inbox-for-pull "~/Org/inbox.org"
+      org-mobile-directory "~/Org/mobile")
 
 (setq calendar-latitude 53.391186
       calendar-longitude 7.227408)
