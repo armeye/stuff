@@ -1,0 +1,20 @@
+#! /usr/local/bin/bash
+
+rm -f pipe
+ls ~/.emacs ~/.gnus ~/.xinitrc | entr +pipe &
+entrpid=$!
+
+finish () {
+    echo done
+    kill $entrpid
+}
+
+trap finish EXIT
+
+sleep 1
+
+while read F; do
+    file=$F
+    cp $file ~/workbench/stuff/dotfiles/`basename $file | sed -e s/^\.//`
+done < pipe
+
