@@ -81,6 +81,10 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-hook 'haskell-mode-hook 'font-lock-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(custom-set-variables '(haskell-tags-on-save t))
+(add-hook 'haskell-mode-hook
+          (lambda () (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)))
+
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "/home/pk/bin/browse")
@@ -98,7 +102,7 @@
 
 (server-start)
 
-;(autoload 'w3m "w3m" "w3m for emacs" t)
+;;(autoload 'w3m "w3m" "w3m for emacs" t)
 (require 'w3m)
 (w3m-toggle-inline-images t)
 
