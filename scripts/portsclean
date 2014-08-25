@@ -1,0 +1,4 @@
+#! /bin/sh
+
+find /usr/ports -type d -name work -execdir make clean \;
+
