@@ -1,4 +1,4 @@
-#! /usr/local/bin/bash
+#! /usr/bin/env bash
 
 rm -f pipe
 ls ~/.emacs ~/.gnus ~/.xinitrc | entr +pipe &
