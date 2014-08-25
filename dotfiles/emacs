@@ -106,5 +106,7 @@
 (require 'w3m)
 (w3m-toggle-inline-images t)
 
+(erc :server "127.0.0.1" :nick "pk")
+
 (load-theme 'wombat t)
 
