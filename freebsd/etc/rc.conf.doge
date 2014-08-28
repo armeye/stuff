@@ -1,0 +1,8 @@
+cloned_interfaces="bridge0 tap0 tap1"
+ifconfig_bridge0="addm bge0 addm tap0 addm tap1 up"
+ifconfig_bge0="dhcp"
+ifconfig_bge0_ipv6="inet6 fd5a:39de:60a1::1"
+geli_devices="/dev/gpt/gpthome"
+kld_list="cuse4bsd vmm nmdm ng_ksocket"
+rtadvd_interfaces="bge0"
+rtadvd_enable="YES"
