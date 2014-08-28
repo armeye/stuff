@@ -1,0 +1,2 @@
+#! /bin/sh
+make -C /usr/ports/x11/tabbed deinstall reinstall clean

@@ -28,12 +28,9 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 
 (pk/add-to-list 'load-path
-		"/usr/home/pk/.emacs.d"
-		"/usr/home/pk/.emacs.d/slime-2013-04-05"
-		"/usr/home/pk/.emacs.d/slime-2013-04-05/contrib"
-		"/usr/home/pk/.emacs.d/w3m")
+		"/usr/home/pk/.emacs.d")
 
-(load "emacs-secrets.el")
+;(load "emacs-secrets.el")
 
 (defun pk/buffer-add-sentinel ()
   (interactive)  
@@ -108,5 +105,5 @@
 
 (erc :server "127.0.0.1" :nick "pk")
 
-(load-theme 'wombat t)
+(load-theme 'solarized-dark t)
 
