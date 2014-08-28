@@ -1,0 +1,24 @@
+KERNCONF=DOGE
+
+#WITH_OPENSSL_LIBRE=yes
+
+MODULES_OVERRIDE= usb/ucom usb/uplcom usb/u3g
+MODULES_OVERRIDE+= usb/ukbd usb/ums usb/uhid
+MODULES_OVERRIDE+= cyclic dtrace/dtrace dtrace/dtmalloc dtrace/profile\
+dtrace/fasttrap dtrace/fbt dtrace/sdt dtrace/prototype dtrace/systrace
+MODULES_OVERRIDE+= if_bridge 
+MODULES_OVERRIDE+= vmm nmdm
+MODULES_OVERRIDE+= ctl iscsi
+MODULES_OVERRIDE+= fuse
+MODULES_OVERRIDE+= geom_sched
+MODULES_OVERRIDE+= netgraph/bluetooth
+MODULES_OVERRIDE+= netgraph/netgraph netgraph/ether netgraph/ksocket\
+netgraph/bridge netgraph/eiface
+
+MODULES_OVERRIDE+= drm2/drm2 drm2/i915kms i2c/iic i2c/iicbb i2c/iicbus
+MODULES_OVERRIDE+= nfscl nfscommon nfssvc nfslock krpc
+MODULES_OVERRIDE+= nfsd nfslockd
+
+DWM_CONF=/home/pk/workbench/stuff/suckless/dwm/dwm-config.h
+SURF_CONF=/home/pk/workbench/stuff/suckless/surf/surf-config.h
+TABBED_CONF=/home/pk/workbench/stuff/suckless/tabbed/tabbed-config.h
