@@ -1,0 +1,5 @@
+[user]
+	email = meyer.arne83@gmail.com
+	name = Arne Meyer
+[core]
+	excludesfile = ~/.gitignore
