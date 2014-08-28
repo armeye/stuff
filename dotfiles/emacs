@@ -106,4 +106,4 @@
 (erc :server "127.0.0.1" :nick "pk")
 
 (load-theme 'solarized-dark t)
-
+(set-face-attribute 'default nil :font  "Terminus-12")
