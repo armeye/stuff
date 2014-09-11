@@ -54,8 +54,17 @@
       (setq pk/buffer-sentinel-entr-proc (pk/buffer-add-sentinel))
     (when (processp pk/buffer-sentinel-entr-proc) (delete-process pk/buffer-sentinel-entr-proc))))
 
+(mapc #'require '(slime emms-setup bbdb erc-image cl-format popwin))
 
-(mapc #'require '(slime emms-setup bbdb))
+(cl-lib-highlight-initialize)
+(add-hook 'emacs-lisp-mode-hook 'cl-format-font-lock-mode)
+
+(defun erc-image-get-twitter-url (url)
+  (with-current-buffer  (url-retrieve-synchronously url)    
+  (re-search-forward "https://pbs\\.twimg\\.com/media/.\\{10,20\\}:large" nil t)
+  (erc-image-show-url-image  (or (match-string 0) ""))))
+
+(add-to-list 'erc-image-regex-alist '("http://pic\\.twitter\\.com/.\\{10\\}" . erc-image-get-twitter-url))
 
 (bbdb-initialize)
 
@@ -74,7 +83,7 @@
 
 (add-hook 'latex-mode-hook 'visual-line-mode)
 
-(load "/usr/local/share/emacs/site-lisp/haskell-mode/haskell-site-file")
+
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-hook 'haskell-mode-hook 'font-lock-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
@@ -103,7 +112,15 @@
 (require 'w3m)
 (w3m-toggle-inline-images t)
 
+
+(add-to-list 'erc-modules 'image)
+(add-to-list 'erc-modules 'replace)
+(require 'erc-replace)
+(setq erc-replace-alist '(("pic.twitter.com" . "http://pic.twitter.com")))
+(erc-replace-mode t)
+(erc-update-modules)
 (erc :server "127.0.0.1" :nick "pk")
 
 (load-theme 'solarized-dark t)
 (set-face-attribute 'default nil :font  "Terminus-12")
+(popwin-mode 1)
