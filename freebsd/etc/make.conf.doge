@@ -10,7 +10,7 @@ MODULES_OVERRIDE+= if_bridge
 MODULES_OVERRIDE+= vmm nmdm
 MODULES_OVERRIDE+= ctl iscsi
 MODULES_OVERRIDE+= fuse
-MODULES_OVERRIDE+= geom_sched
+#MODULES_OVERRIDE+= geom_sched
 MODULES_OVERRIDE+= netgraph/bluetooth
 MODULES_OVERRIDE+= netgraph/netgraph netgraph/ether netgraph/ksocket\
 netgraph/bridge netgraph/eiface
@@ -22,3 +22,4 @@ MODULES_OVERRIDE+= nfsd nfslockd
 DWM_CONF=/home/pk/workbench/stuff/suckless/dwm/dwm-config.h
 SURF_CONF=/home/pk/workbench/stuff/suckless/surf/surf-config.h
 TABBED_CONF=/home/pk/workbench/stuff/suckless/tabbed/tabbed-config.h
+WITHOUT_GALLIUM=yes
