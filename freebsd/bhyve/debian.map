@@ -1,0 +1,3 @@
+(cd0) ./debian-7.6.0-amd64-netinst.iso
+(hd0) ./debian.img
+
