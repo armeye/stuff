@@ -19,8 +19,10 @@ static const char *tags[] = { "term", "editor", "www", "scratch", "media" };
 static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "XTerm",    NULL,       NULL,       0x1,            False,       -1 },
+	{ "9term",    NULL,       NULL,       0x1,           False,        -1 },
 	{ "tabbed",   NULL,       NULL,       0x4,            False,       -1 },
-	{ "Emacs",    NULL,       NULL,       0x2,            False,       -1 },
+	{ "acme",    NULL,       NULL,       0x2,            False,       -1 },
+	{ "sam",     NULL,	 NULL,	     0x2,            False        -1 }
 };
 
 /* layout(s) */
