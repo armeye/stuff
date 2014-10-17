@@ -22,7 +22,8 @@ static const Rule rules[] = {
 	{ "9term",    NULL,       NULL,       0x1,           False,        -1 },
 	{ "tabbed",   NULL,       NULL,       0x4,            False,       -1 },
 	{ "acme",    NULL,       NULL,       0x2,            False,       -1 },
-	{ "sam",     NULL,	 NULL,	     0x2,            False        -1 }
+	{ "sam",     NULL,	 NULL,	     0x2,            False,        -1 },
+	{ "bar",     NULL,       NULL,       0,		     True,        -1 }
 };
 
 /* layout(s) */
