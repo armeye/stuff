@@ -21,9 +21,10 @@ static const Rule rules[] = {
 	{ "XTerm",    NULL,       NULL,       0x1,            False,       -1 },
 	{ "9term",    NULL,       NULL,       0x1,           False,        -1 },
 	{ "tabbed",   NULL,       NULL,       0x4,            False,       -1 },
-	{ "acme",    NULL,       NULL,       0x2,            False,       -1 },
-	{ "sam",     NULL,	 NULL,	     0x2,            False,        -1 },
-	{ "bar",     NULL,       NULL,       0,		     True,        -1 }
+	{ "acme",    NULL,       NULL,        0x2,            False,       -1 },
+	{ "sam",     NULL,	 NULL,	      0x2,            False,       -1 },
+	{ "bar",     NULL,       NULL,          0,	      True,        -1 },
+	{ "mplayer2", NULL,      NULL,        0x10,           False,       -1 }
 };
 
 /* layout(s) */
