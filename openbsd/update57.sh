@@ -1,3 +1,5 @@
+#! /bin/sh
+
 cd /etc/X11/app-defaults
 rm Beforelight Bitmap Bitmap-color Bitmap-nocase Chooser Clock-color
 rm Editres Editres-color KOI8RXTerm SshAskpass UXTerm Viewres
