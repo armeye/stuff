@@ -1,0 +1,3 @@
+#! /bin/sh
+
+dwebp -pam -o - "$1"
