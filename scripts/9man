@@ -1,0 +1,3 @@
+#! /bin/sh
+
+9 man "$1" | less
