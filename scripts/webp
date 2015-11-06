@@ -1,0 +1,3 @@
+#! /bin/sh
+
+webptopnm "$1" | pamtopnm | pnmtopng | 9 page
