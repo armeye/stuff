@@ -1,0 +1,2 @@
+#! /bin/sh
+xclip -o | 9 plumb -i
