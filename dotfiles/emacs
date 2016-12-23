@@ -1,48 +1,78 @@
-(mapc #'require '(package cl))
+;;; Commentary:
 
-(add-to-list 'package-archives 
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
-
+;;; Code:
+(require 'package)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
-(defun trim-string (str)
-  (replace-regexp-in-string "^[ \t]+" ""
-                            (replace-regexp-in-string "[ \t\n]+$" "" str)))
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "/usr/local/bin/surf")
 
-(setq uname-host (trim-string (shell-command-to-string "uname -n")))
+(require 'unicode-fonts)
+(unicode-fonts-setup)
+
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(show-paren-mode 1)
+(ivy-mode 1)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(server-start)
+(bbdb-initialize)
+(load-theme 'wombat t)
+
+(set-face-attribute 'default nil :font  "Terminus-12")
 
 
-(defun pk/add-to-list (lst &rest args)
-  (loop for i in args do (add-to-list lst i)))
+(setq dired-listing-switches "-ahl")
+
+(require 'emms-setup)
+(require 'emms-info-libtag)
+(emms-all)
+(emms-default-players)
+(emms-mode-line-enable)
+(setq emms-stream-default-action "play")
+(setq emms-info-functions '(emms-info-libtag))
+
+(require 'slime)
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(slime-setup '(slime-fancy))
+
+(erc :server "127.0.0.1" :nick "pk")
+
+(add-hook 'latex-mode-hook #'visual-line-mode)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-(when (string= uname-host "doge")
-  (require 'auto-complete-config)
-  (setq ac-auto-start 5)
-  (ac-config-default))
+(add-hook 'dired-mode-hook
+	  (function (lambda ()
+		      (define-key dired-mode-map (kbd "M-m") 'emms-play-dired))))
 
-(require 'yasnippet)
-(yas-global-mode 1)
+(require 'recentf)
+(global-set-key (kbd "C-c r") 'recentf-open-files)
 
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 
-(pk/add-to-list 'load-path
-		"/usr/home/pk/.emacs.d")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'font-lock-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(custom-set-variables '(haskell-tags-on-save t))
+(add-hook 'haskell-mode-hook
+          (lambda () (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)))
 
-;(load "emacs-secrets.el")
 
+;; own code
 (defun pk/buffer-add-sentinel ()
-  (interactive)  
+  (interactive)
   (let ((buf (buffer-file-name)))
     (when buf
       (start-process-shell-command "entr-sentinel" "Entr"
-				   (concatenate 'string
-						"echo "
-						buf
-						" | entr emacsclient -e \'(with-current-buffer \""
-						(buffer-name)
-						"\" (revert-buffer t t t))\'")))))
+                                   (concatenate 'string
+                                                "echo "
+                                                buf
+                                                " | entr emacsclient -e \'(with-current-buffer \""
+                                                (buffer-name)
+                                                "\" (revert-buffer t t t))\'")))))
 
 (make-variable-buffer-local
  (defvar pk/buffer-sentinel-entr-proc nil))
@@ -54,73 +84,6 @@
       (setq pk/buffer-sentinel-entr-proc (pk/buffer-add-sentinel))
     (when (processp pk/buffer-sentinel-entr-proc) (delete-process pk/buffer-sentinel-entr-proc))))
 
-(mapc #'require '(slime emms-setup bbdb erc-image cl-format popwin))
+(provide '.emacs)
 
-(cl-lib-highlight-initialize)
-(add-hook 'emacs-lisp-mode-hook 'cl-format-font-lock-mode)
-
-(defun erc-image-get-twitter-url (url)
-  (with-current-buffer  (url-retrieve-synchronously url)    
-  (re-search-forward "https://pbs\\.twimg\\.com/media/.\\{10,20\\}:large" nil t)
-  (erc-image-show-url-image  (or (match-string 0) ""))))
-
-(add-to-list 'erc-image-regex-alist '("http://pic\\.twitter\\.com/.\\{10\\}" . erc-image-get-twitter-url))
-
-(bbdb-initialize)
-
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
-;(require 'slime)
-(slime-setup '(slime-fancy))
-
-(emms-all)
-(emms-default-players)
-(setq emms-stream-default-action "play")
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(show-paren-mode 1)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(add-hook 'latex-mode-hook 'visual-line-mode)
-
-
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(add-hook 'haskell-mode-hook 'font-lock-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(custom-set-variables '(haskell-tags-on-save t))
-(add-hook 'haskell-mode-hook
-          (lambda () (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)))
-
-
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "/home/pk/bin/browse")
-
-
-; Org stuff
-(setq org-directory "~/Org/"
-      org-agenda-files '("~/Org/todo.org")
-      org-mobile-files '("~/Org/todo.org")
-      org-mobile-inbox-for-pull "~/Org/inbox.org"
-      org-mobile-directory "~/Org/mobile")
-
-(setq calendar-latitude 53.391186
-      calendar-longitude 7.227408)
-
-(server-start)
-
-;;(autoload 'w3m "w3m" "w3m for emacs" t)
-(require 'w3m)
-(w3m-toggle-inline-images t)
-
-
-(add-to-list 'erc-modules 'image)
-(add-to-list 'erc-modules 'replace)
-(require 'erc-replace)
-(setq erc-replace-alist '(("pic.twitter.com" . "http://pic.twitter.com")))
-(erc-replace-mode t)
-(erc-update-modules)
-(erc :server "127.0.0.1" :nick "pk")
-
-(load-theme 'solarized-dark t)
-(set-face-attribute 'default nil :font  "Terminus-12")
-(popwin-mode 1)
+;;; .emacs ends here
