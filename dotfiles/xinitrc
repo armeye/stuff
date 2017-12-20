@@ -1,19 +1,27 @@
-#! /usr/local/bin/bash
+#! /bin/sh
 
-
-xrdb ~/.xrdb
 xmodmap ~/.Xmodmap
 
-xterm &
-xterm &
-xterm &
+xset +fp /usr/local/share/fonts/mplus
+xset +fp /usr/local/share/fonts/terminus
+xset +fp /usr/local/share/fonts/Liberation
+xset +fp /usr/local/share/fonts/symbola
+xset +fp /usr/local/share/fonts/adobe-source-code-pro
+xset +fp /usr/local/share/fonts/korean
+
+xsetroot -solid black
 
 while true; do
-  xsetroot -name `date "+%H:%M"`
-  sleep 60
+	xsetroot -name `date "+%H:%M"`
+	sleep 60
 done &
 
-tabbed -d -f -n browser surf -e > /home/pk/.tabbed.xid
-emacs &
+eval `ssh-agent`
+ssh-add
+ssh-add ~/.ssh/hostkeys/*
 
-exec dwm
+chrome &
+tabbed -n XTerm -f st -w &
+emacs &
+exec /home/pk/bin/dwm
+
