@@ -1,0 +1,1 @@
+service=cpu user=glenda console=0 auth=cirno nvram=/dev/sdM0/nvram bootargs='local!/dev/sdM0/fscache -a tcp!*!564'
